@@ -1,0 +1,84 @@
+/* Police élégante et fluide */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  background: linear-gradient(135deg, #e8f0fc, #ffffff);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Carte centrale avec ombrage doux */
+.container {
+  background-color: #ffffff;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 90%;
+  max-width: 850px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Titre principal stylisé */
+h1 {
+  font-size: 42px;
+  font-weight: 800;
+  color: #003366;
+  margin-bottom: 40px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px rgba(0, 51, 102, 0.2);
+}
+
+/* Boutons design moderne */
+button {
+  background: linear-gradient(135deg, #1976d2, #1565c0);
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  margin: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #1565c0, #0d47a1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(21, 101, 192, 0.4);
+}
+
+/* Input fichier stylisé */
+input[type="file"] {
+  margin-top: 20px;
+  padding: 14px;
+  border: 2px dashed #1976d2;
+  border-radius: 12px;
+  background-color: #f3f9ff;
+  color: #003366;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+input[type="file"]:hover {
+  border-color: #0d47a1;
+}
