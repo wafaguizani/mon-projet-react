@@ -10,6 +10,13 @@ import "./App.css";
 
 function App() {
   const [excelData, setExcelData] = useState(null);
+  const [fileDates, setFileDates] = useState({ from: null, to: null });
+
+  // Fonction pour convertir "JJ/MM/AAAA" → objet Date
+  const parseCustomDate = (str) => {
+    const [day, month, year] = str.split("/");
+    return new Date(`${year}-${month}-${day}`);
+  };
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -24,13 +31,25 @@ function App() {
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
 
-      // Lire toutes les lignes sous forme de tableau brut
+      // Lire toutes les lignes comme tableau brut
       const rows = XLSX.utils.sheet_to_json(sheet, {
         header: 1,
         defval: "",
       });
 
-      // Trouver la ligne contenant les colonnes utiles (ex : ligne avec "#RU_USER_ID")
+      // 🗓️ Extraire les dates depuis les lignes du haut
+      const fromDateRow = rows.find(row => row[0] === "#Date from");
+      const toDateRow = rows.find(row => row[0] === "#Date to");
+
+      const fromDate = fromDateRow ? fromDateRow[1] : null;
+      const toDate = toDateRow ? toDateRow[1] : null;
+
+      setFileDates({
+        from: parseCustomDate(fromDate),
+        to: parseCustomDate(toDate),
+      });
+
+      // 🔍 Trouver la ligne contenant les en-têtes utiles
       const headerIndex = rows.findIndex(row =>
         row.includes("#RU_USER_ID") && row.includes("#RU_USER_MIN")
       );
@@ -51,7 +70,7 @@ function App() {
         return obj;
       });
 
-      console.log("✅ Données converties manuellement :", jsonData);
+      console.log("✅ Données converties :", jsonData);
       setExcelData(jsonData);
     };
 
@@ -64,6 +83,13 @@ function App() {
         <h1>DRÄXLMAIER Report Viewer</h1>
 
         <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
+
+        {/* 🗓️ Affichage des dates du rapport */}
+        {fileDates.from && fileDates.to && (
+          <p style={{ marginTop: "20px", fontWeight: "bold", color: "#003366" }}>
+            📅 Rapport du : {fileDates.from.toLocaleDateString()} au {fileDates.to.toLocaleDateString()}
+          </p>
+        )}
 
         {excelData && (
           <div style={{ marginTop: "30px" }}>
