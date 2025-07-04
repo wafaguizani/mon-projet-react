@@ -3,8 +3,11 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip,
   CartesianGrid, ResponsiveContainer, LabelList
 } from "recharts";
+import { useNavigate, Link } from "react-router-dom";
 
 function TypePage({ data }) {
+  const navigate = useNavigate();
+
   useEffect(() => {
     console.log("✅ Données reçues dans TypePage :", data);
     if (data?.length > 0) console.log("🧪 Exemple de ligne :", data[0]);
@@ -46,6 +49,14 @@ function TypePage({ data }) {
     minutes,
   }));
 
+  // Gérer le clic sur une barre de l’histogramme
+  const handleBarClick = (data) => {
+    const rawType = data?.activePayload?.[0]?.payload?.type;
+    if (rawType) {
+      navigate(`/details-type/${rawType.toLowerCase()}`);
+    }
+  };
+
   return (
     <div style={{ padding: "2rem", fontFamily: "Segoe UI, sans-serif", background: "#f4f7fa", minHeight: "100vh" }}>
       <h2 style={{ textAlign: "center", color: "#333", marginBottom: "2rem" }}>
@@ -71,7 +82,11 @@ function TypePage({ data }) {
           <tbody>
             {summaryData.map(row => (
               <tr key={row.type} style={{ borderBottom: "1px solid #eee" }}>
-                <td style={{ padding: "12px" }}>{row.type}</td>
+                <td style={{ padding: "12px" }}>
+                  <Link to={`/details-type/${row.type}`} style={{ color: "#1976d2", textDecoration: "underline" }}>
+                    {row.type}
+                  </Link>
+                </td>
                 <td style={{ padding: "12px" }}>{row.minutes}</td>
               </tr>
             ))}
@@ -91,6 +106,7 @@ function TypePage({ data }) {
           <BarChart
             data={summaryData}
             margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+            onClick={handleBarClick}
           >
             <defs>
               <linearGradient id="typeColor" x1="0" y1="0" x2="0" y2="1">

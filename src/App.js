@@ -6,6 +6,7 @@ import TypePage from "./pages/TypePage";
 import PannePage from "./pages/PannePage";
 import DetailPannePage from "./pages/DetailPannePage";
 import DetailPanneTechnicien from "./pages/DetailPanneTechnicien";
+import DetailTypePage from "./pages/DetailTypePage";
 import "./App.css";
 
 function App() {
@@ -93,10 +94,10 @@ function App() {
 
         {excelData && (
           <div style={{ marginTop: "30px" }}>
-            <Link to="/time"><button>Page Time</button></Link>
-            <Link to="/type"><button>Page Type</button></Link>
-            <Link to="/panne"><button>Page Panne</button></Link>
-            <Link to="/detail-panne"><button>Détails de Panne</button></Link>
+            <Link to="/time"><button>Occupation</button></Link>
+            <Link to="/type"><button>Types de pannes</button></Link>
+            <Link to="/panne"><button>Pannes détaillées</button></Link>
+            <Link to="/detail-panne"><button>Détails par erreur</button></Link>
           </div>
         )}
 
@@ -106,6 +107,7 @@ function App() {
           <Route path="/panne" element={<PannePage data={excelData} />} />
           <Route path="/detail-panne/:errorCode" element={<DetailPannePage data={excelData} />} />
           <Route path="/detail-technicien/:name" element={<DetailPanneTechnicien data={excelData} />} />
+          <Route path="/details-type/:typeName" element={<DetailTypePage data={excelData} />} />
         </Routes>
       </div>
     </Router>
